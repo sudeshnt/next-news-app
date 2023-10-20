@@ -1,32 +1,47 @@
-"use client";
-
+import { SearchData } from "@/services/types";
 import { NewsCategory } from "@/types";
 import { Box } from "@chakra-ui/react";
-import { useState } from "react";
 
-export default function NewsCategories() {
-  const [active, setActive] = useState(0);
+type NewsCategoriesProps = {
+  searchData: SearchData;
+  onChangeSearchData: (data: Partial<SearchData>) => void;
+};
+
+export default function NewsCategories(props: NewsCategoriesProps) {
+  const { searchData, onChangeSearchData } = props;
+
+  const selectedCategory = searchData.category;
+  const selectedSource = searchData.sources;
 
   const categories = [
     { label: NewsCategory.All, value: "" },
-    { label: NewsCategory.General },
-    { label: NewsCategory.Business },
-    { label: NewsCategory.Entertainment },
-    { label: NewsCategory.Health },
-    { label: NewsCategory.Science },
-    { label: NewsCategory.Sports },
-    { label: NewsCategory.Technology },
+    ...(selectedSource
+      ? []
+      : [
+          { label: NewsCategory.General },
+          { label: NewsCategory.Business },
+          { label: NewsCategory.Entertainment },
+          { label: NewsCategory.Health },
+          { label: NewsCategory.Science },
+          { label: NewsCategory.Sports },
+          { label: NewsCategory.Technology },
+        ]),
   ];
+
+  const handleOnChangeCategory = (label: string) => {
+    const category = label === NewsCategory.All ? "" : label;
+    onChangeSearchData({ category });
+  };
 
   return (
     <section className="flex flex-col">
       <Box className="flex flex-row flex-wrap gap-4 py-4">
-        {categories.map((tab, index) => (
+        {categories.map((tab) => (
           <span
-            key={index}
-            onClick={() => setActive(index)}
+            key={tab.label}
+            onClick={() => handleOnChangeCategory(tab.label)}
             className={`px-4 py-1 rounded-full border-2 cursor-pointer transition-all capitalize  hover:border-primary/40 ${
-              active === index
+              selectedCategory === tab.label || selectedCategory === tab.value
                 ? "text-secondary border-secondary/50 bg-slate-100"
                 : "text-primary/60 border-primary/60"
             }`}

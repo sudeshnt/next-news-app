@@ -1,5 +1,6 @@
 import { News } from "@/services/types";
 import { Box, Button, Heading, Image, Text, VStack } from "@chakra-ui/react";
+import Link from "next/link";
 
 type NewsCardProps = {
   news: News;
@@ -13,7 +14,7 @@ export default function NewsCard(props: NewsCardProps) {
       <Box className="h-96">
         <Image
           className="h-full object-cover transition-transform duration-600 group-hover:rotate-3 group-hover:scale-125"
-          src={news.urlToImage}
+          src={news.urlToImage ?? "/images/fallback-image.jpg"}
           alt=""
         />
       </Box>
@@ -22,20 +23,22 @@ export default function NewsCard(props: NewsCardProps) {
         <Heading mb={2} size="md">
           {news.title}
         </Heading>
-        <VStack>
-          <Text className="italic opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+        <VStack className="opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+          <Text className="italic">
             {news.source.name}
             {"\n"}
           </Text>
-          <Text className="mb-3 italic opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-            {news.author}
-          </Text>
-          <Button
-            borderWidth={2}
-            className="rounded-full py-2 px-3.5 capitalize border-width-2 shadow text-white hover:text-secondary"
+          <Text className="mb-3 italic">{news.author}</Text>
+          <Link
+            href={{ pathname: "/news", query: { data: JSON.stringify(news) } }}
           >
-            See More
-          </Button>
+            <Button
+              borderWidth={2}
+              className="rounded-full capitalize border-width-2 text-white hover:text-secondary"
+            >
+              Read More
+            </Button>
+          </Link>
         </VStack>
       </Box>
     </Box>

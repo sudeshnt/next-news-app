@@ -1,16 +1,17 @@
-import NewsCategories from "@/components/News/NewsCategories/NewsCategories";
 import NewsGrid from "@/components/News/NewsGrid/NewsGrid";
+import NewsListHeader from "@/components/News/NewsListHeader/NewsListHeader";
 import { fetchNews, fetchNewsSources } from "@/services/news-service";
-import { Box, Heading } from "@chakra-ui/react";
+import { SearchData } from "@/services/types";
+import { NextPageProps } from "@/types";
+import { Box } from "@chakra-ui/react";
 
-export default async function Home() {
+export default async function Home({ searchParams }: NextPageProps) {
   const newsSources = await fetchNewsSources();
-  const news = await fetchNews();
+  const news = await fetchNews(searchParams as Partial<SearchData>);
 
   return (
     <Box className="page max-h-[calc(100vh-80px)]">
-      <Heading variant="2xl">Latest News</Heading>
-      <NewsCategories />
+      <NewsListHeader newsSources={newsSources} />
       <NewsGrid newsList={news} />
     </Box>
   );

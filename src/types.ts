@@ -8,3 +8,8 @@ export enum NewsCategory {
   Sports = "sports",
   Technology = "technology",
 }
+
+export type NextSearchParams = Record<string, string | undefined>;
+export type NextPageProps = {
+  searchParams: NextSearchParams;
+};

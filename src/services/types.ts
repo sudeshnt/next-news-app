@@ -21,3 +21,9 @@ export type NewsSource = {
   language: string;
   country: string;
 };
+
+export type SearchData = {
+  q: string;
+  sources: string;
+  category: string;
+};
