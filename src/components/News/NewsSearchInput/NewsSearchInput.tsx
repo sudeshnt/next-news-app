@@ -27,6 +27,7 @@ const styles: StylesConfig<any> = {
       boxShadow: "0px 0px 6px #white",
     },
     height: 40,
+    minWidth: 160,
   }),
   singleValue: (styles, { data }) => ({ ...styles, color: "white" }),
 };

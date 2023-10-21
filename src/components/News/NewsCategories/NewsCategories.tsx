@@ -14,11 +14,10 @@ export default function NewsCategories(props: NewsCategoriesProps) {
   const selectedSource = searchData.sources;
 
   const categories = [
-    { label: NewsCategory.All, value: "" },
+    { label: NewsCategory.General, value: "" },
     ...(selectedSource
       ? []
       : [
-          { label: NewsCategory.General },
           { label: NewsCategory.Business },
           { label: NewsCategory.Entertainment },
           { label: NewsCategory.Health },
@@ -28,8 +27,7 @@ export default function NewsCategories(props: NewsCategoriesProps) {
         ]),
   ];
 
-  const handleOnChangeCategory = (label: string) => {
-    const category = label === NewsCategory.All ? "" : label;
+  const handleOnChangeCategory = (category: string) => {
     onChangeSearchData({ category });
   };
 
@@ -39,7 +37,7 @@ export default function NewsCategories(props: NewsCategoriesProps) {
         {categories.map((tab) => (
           <span
             key={tab.label}
-            onClick={() => handleOnChangeCategory(tab.label)}
+            onClick={() => handleOnChangeCategory(tab.value ?? tab.label)}
             className={`px-4 py-1 rounded-full border-2 cursor-pointer transition-all capitalize  hover:border-primary/40 ${
               selectedCategory === tab.label || selectedCategory === tab.value
                 ? "text-secondary border-secondary/50 bg-slate-100"

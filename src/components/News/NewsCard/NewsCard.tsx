@@ -1,5 +1,5 @@
 import { News } from "@/services/types";
-import { Box, Button, Heading, Image, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Heading, Image, Text } from "@chakra-ui/react";
 import Link from "next/link";
 
 type NewsCardProps = {
@@ -20,26 +20,32 @@ export default function NewsCard(props: NewsCardProps) {
       </Box>
       <Box className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black group-hover:from-black/70 group-hover:via-black/60 group-hover:to-black/70"></Box>
       <Box className="absolute inset-0 flex translate-y-[160px] flex-col items-center justify-center px-8  transition-all duration-500 group-hover:translate-y-0">
-        <Heading mb={2} size="md">
+        <Heading mb={1} size="md">
           {news.title}
         </Heading>
-        <VStack className="opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-          <Text className="italic">
-            {news.source.name}
-            {"\n"}
+        <Box
+          w="full"
+          className="opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        >
+          <Text className="italic text-white/75">
+            by {news.author}, {news.source.name},{"\n"}
           </Text>
-          <Text className="mb-3 italic">{news.author}</Text>
-          <Link
-            href={{ pathname: "/news", query: { data: JSON.stringify(news) } }}
-          >
-            <Button
-              borderWidth={2}
-              className="rounded-full capitalize border-width-2 text-white hover:text-secondary"
+          <Box mt={6} className="flex justify-center">
+            <Link
+              href={{
+                pathname: "/news",
+                query: { data: JSON.stringify(news) },
+              }}
             >
-              Read More
-            </Button>
-          </Link>
-        </VStack>
+              <Button
+                borderWidth={2}
+                className="rounded-full capitalize border-width-2 text-white hover:text-secondary"
+              >
+                Read More
+              </Button>
+            </Link>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );

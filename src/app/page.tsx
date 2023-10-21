@@ -10,7 +10,7 @@ export default async function Home({ searchParams }: NextPageProps) {
   const news = await fetchNews(searchParams as Partial<SearchData>);
 
   return (
-    <Box className="page max-h-[calc(100vh-80px)]">
+    <Box className="page max-h-[calc(100vh-60px)] pt-6">
       <NewsListHeader newsSources={newsSources} />
       <NewsGrid newsList={news} />
     </Box>

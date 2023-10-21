@@ -1,7 +1,7 @@
 "use client";
 
 import { NewsSource, SearchData } from "@/services/types";
-import { HStack, Heading } from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import NewsCategories from "../NewsCategories/NewsCategories";
@@ -38,13 +38,15 @@ export default function NewsListHeader(props: NewsListHeaderProps) {
 
   return (
     <>
-      <HStack justify="space-between">
-        <Heading variant="2xl">Latest News</Heading>
+      <Box className="flex flex-col md:flex-row md:justify-between">
+        <Heading className="mb-4" variant="2xl">
+          Latest News
+        </Heading>
         <NewsSearchInput
           newsSources={newsSources}
           onChangeSearchData={handleChangeSearchData}
         />
-      </HStack>
+      </Box>
       <NewsCategories
         searchData={searchData}
         onChangeSearchData={handleChangeSearchData}
