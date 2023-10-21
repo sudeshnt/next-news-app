@@ -1,11 +1,11 @@
 "use client";
 
-import { NewsSource, SearchData } from "@/services/types";
+import { SearchData } from "@/services/types";
 import { Box, Heading } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import NewsCategories from "../NewsCategories/NewsCategories";
-import NewsSearchInput from "../NewsSearchInput/NewsSearchInput";
+import NewsSearchInput from "../NewsSearch/NewsSearchInput";
 
 const DEFAULT_SEARCH_DATA = {
   q: "",
@@ -13,13 +13,7 @@ const DEFAULT_SEARCH_DATA = {
   category: "",
 };
 
-type NewsListHeaderProps = {
-  newsSources: NewsSource[];
-};
-
-export default function NewsListHeader(props: NewsListHeaderProps) {
-  const { newsSources } = props;
-
+export default function NewsListHeader() {
   const router = useRouter();
 
   const [searchData, setSearchData] = useState(DEFAULT_SEARCH_DATA);
@@ -42,10 +36,7 @@ export default function NewsListHeader(props: NewsListHeaderProps) {
         <Heading className="mb-4" variant="2xl">
           Latest News
         </Heading>
-        <NewsSearchInput
-          newsSources={newsSources}
-          onChangeSearchData={handleChangeSearchData}
-        />
+        <NewsSearchInput onChangeSearchData={handleChangeSearchData} />
       </Box>
       <NewsCategories
         searchData={searchData}

@@ -1,8 +1,15 @@
 "use client";
 
+import { fetchNewsSources } from "@/services/news-service";
 import { NewsSource, SearchData } from "@/services/types";
 import { HStack, Input } from "@chakra-ui/react";
-import { ChangeEventHandler, useMemo } from "react";
+import {
+  ChangeEventHandler,
+  useEffect,
+  useMemo,
+  useState,
+  useTransition,
+} from "react";
 import Select, { StylesConfig } from "react-select";
 
 type OptionType = {
@@ -11,7 +18,6 @@ type OptionType = {
 };
 
 type NewsSearchInputProps = {
-  newsSources: NewsSource[];
   onChangeSearchData: (data: Partial<SearchData>) => void;
 };
 
@@ -33,7 +39,11 @@ const styles: StylesConfig<any> = {
 };
 
 export default function NewsSearchInput(props: NewsSearchInputProps) {
-  const { newsSources, onChangeSearchData } = props;
+  const { onChangeSearchData } = props;
+
+  const [newsSources, setNewsSources] = useState<NewsSource[]>([]);
+
+  const [isPending, startTransition] = useTransition();
 
   const newsSourcesOptions: OptionType[] = useMemo(
     () =>
@@ -62,6 +72,13 @@ export default function NewsSearchInput(props: NewsSearchInputProps) {
     }
   };
 
+  useEffect(() => {
+    startTransition(async () => {
+      const newsSources = await fetchNewsSources();
+      setNewsSources(newsSources);
+    });
+  }, []);
+
   return (
     <HStack gap={0}>
       <Select
@@ -70,6 +87,7 @@ export default function NewsSearchInput(props: NewsSearchInputProps) {
         placeholder="All Sources"
         isClearable
         options={newsSourcesOptions}
+        isLoading={isPending}
         onChange={handleOnChangeSearchSource}
       />
       <Input

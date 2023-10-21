@@ -1,3 +1,5 @@
+export const PAGE_SIZE = 12;
+
 export type News = {
   source: {
     id: string;

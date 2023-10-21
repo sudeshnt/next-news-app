@@ -38,10 +38,10 @@ export default function NewsCategories(props: NewsCategoriesProps) {
           <span
             key={tab.label}
             onClick={() => handleOnChangeCategory(tab.value ?? tab.label)}
-            className={`px-4 py-1 rounded-full border-2 cursor-pointer transition-all capitalize  hover:border-primary/40 ${
+            className={`px-4 py-1 rounded-full border-2 cursor-pointer transition-all capitalize ${
               selectedCategory === tab.label || selectedCategory === tab.value
                 ? "text-secondary border-secondary/50 bg-slate-100"
-                : "text-primary/60 border-primary/60"
+                : "text-primary/60 border-primary/60 hover:border-white/70 hover:text-white/60"
             }`}
           >
             {tab.label}
