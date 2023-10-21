@@ -41,7 +41,7 @@ export default async function NewsDetailsPage({ searchParams }: NextPageProps) {
         className="float-right h-300"
       />
       <Text mb={20} whiteSpace="pre-wrap">
-        {article.replace(/\n{2,}/g, "")}
+        {article?.replace(/\n{2,}/g, "")}
       </Text>
     </div>
   );

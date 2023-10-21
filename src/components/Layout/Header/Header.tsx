@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Header = () => {
   return (
-    <header className="absolute z-30 w-full flex items-center  px-[10%] xl:h-[90px]">
+    <header className="absolute z-30 w-full flex items-center  px-[10%]">
       <div className="">
         <div className="flex flex-col justify-between items-center xl:flex-row">
           <Link href={"/"}>
