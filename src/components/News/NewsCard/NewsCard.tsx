@@ -1,5 +1,6 @@
 import { News } from "@/services/types";
-import { Box, Heading, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, Image, Text } from "@chakra-ui/react";
+import EditTitleButton from "./EditTitleButton";
 import ReadMoreButton from "./ReadMoreButton";
 
 type NewsCardProps = {
@@ -22,9 +23,12 @@ export default function NewsCard(props: NewsCardProps) {
       </Box>
       <Box className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black group-hover:from-black/70 group-hover:via-black/60 group-hover:to-black/70"></Box>
       <Box className="absolute inset-0 flex translate-y-[160px] flex-col items-center justify-center px-8  transition-all duration-500 group-hover:translate-y-0">
-        <Heading mb={1} size="md">
-          {news.title}
-        </Heading>
+        <Flex>
+          <Heading mb={1} size="md">
+            {news.title}
+            <EditTitleButton title={news.title} />
+          </Heading>
+        </Flex>
         <Box
           w="full"
           className="opacity-0 transition-opacity duration-500 group-hover:opacity-100"

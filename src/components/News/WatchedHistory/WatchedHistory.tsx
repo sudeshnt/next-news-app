@@ -60,7 +60,7 @@ export default function WatchedHistory() {
       isLazy
       lazyBehavior="keepMounted"
     >
-      <HStack className="text-white/80 hover:text-white transition-all">
+      <HStack className="text-primary hover:text-white transition-all">
         <PopoverTrigger>
           <Button leftIcon={<SlEye />} aria-label="eye-icon">
             <Text>Watch List</Text>

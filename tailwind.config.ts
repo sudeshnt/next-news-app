@@ -16,6 +16,7 @@ const config: Config = {
       colors: {
         primary: "#9d8dbd",
         secondary: "#393A47",
+        primaryBackground: "#1b1437",
       },
       backgroundImage: {
         explosion: 'url("/images/bg-explosion.png")',
