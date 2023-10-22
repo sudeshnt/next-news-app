@@ -1,7 +1,9 @@
 import { readNewsDetailsFromUrl } from "@/services/news-service";
 import { News } from "@/services/types";
 import { NextPageProps } from "@/types";
-import { Box, Heading, Image, Text } from "@chakra-ui/react";
+import { Box, HStack, Heading, Image, Text } from "@chakra-ui/react";
+import Link from "next/link";
+import { IoMdArrowBack } from "react-icons/io";
 
 const parseJsonSafely = (str: string | undefined): News | null => {
   if (str) {
@@ -24,6 +26,12 @@ export default async function NewsDetailsPage({ searchParams }: NextPageProps) {
 
   return (
     <div className="page max-h-[calc(100vh-60px)] overflow-y-scroll hide-scrollbar pt-8">
+      <Link href={"/"}>
+        <HStack className="text-base font-medium mb-5">
+          <IoMdArrowBack />
+          <Text>back to Latest News</Text>
+        </HStack>
+      </Link>
       <Heading variant="2xl">{news.title}</Heading>
       <Box
         mb={6}

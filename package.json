@@ -17,15 +17,18 @@
     "@mozilla/readability": "^0.4.4",
     "framer-motion": "^10.16.4",
     "jsdom": "^22.1.0",
+    "localforage": "^1.10.0",
     "lodash": "^4.17.21",
     "next": "13.5.5",
     "react": "^18",
     "react-dom": "^18",
+    "react-icons": "^4.11.0",
     "react-select": "^5.7.7",
     "tailwind-scrollbar": "^3.0.5"
   },
   "devDependencies": {
     "@types/jsdom": "^21.1.4",
+    "@types/localforage": "^0.0.34",
     "@types/lodash": "^4.14.200",
     "@types/node": "^20",
     "@types/react": "^18",

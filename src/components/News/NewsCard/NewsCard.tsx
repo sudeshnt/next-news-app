@@ -1,6 +1,6 @@
 import { News } from "@/services/types";
-import { Box, Button, Heading, Image, Text } from "@chakra-ui/react";
-import Link from "next/link";
+import { Box, Heading, Image, Text } from "@chakra-ui/react";
+import ReadMoreButton from "./ReadMoreButton";
 
 type NewsCardProps = {
   news: News;
@@ -11,10 +11,12 @@ export default function NewsCard(props: NewsCardProps) {
 
   return (
     <Box className="group relative cursor-pointer overflow-hidden transition-shadow hover:shadow-xl hover:shadow-black/30">
-      <Box className="h-96">
+      <Box className="h-96 ">
         <Image
-          className="h-full object-cover transition-transform duration-600 group-hover:rotate-3 group-hover:scale-125"
-          src={news.urlToImage ?? "/images/fallback-image.jpg"}
+          className={`h-full ${
+            news.urlToImage ? "object-cover" : "object-contain"
+          } transition-transform duration-600 group-hover:rotate-3 group-hover:scale-125`}
+          src={news.urlToImage ?? "/images/fallback_image.png"}
           alt=""
         />
       </Box>
@@ -31,19 +33,7 @@ export default function NewsCard(props: NewsCardProps) {
             by {news.author}, {news.source.name},{"\n"}
           </Text>
           <Box mt={6} className="flex justify-center">
-            <Link
-              href={{
-                pathname: "/news",
-                query: { data: JSON.stringify(news) },
-              }}
-            >
-              <Button
-                borderWidth={2}
-                className="rounded-full capitalize border-width-2 text-white hover:text-secondary"
-              >
-                Read More
-              </Button>
-            </Link>
+            <ReadMoreButton news={news} />
           </Box>
         </Box>
       </Box>
