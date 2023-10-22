@@ -2,6 +2,7 @@
 
 import { News } from "@/services/types";
 import {
+  Button,
   Card,
   CardBody,
   HStack,
@@ -59,12 +60,11 @@ export default function WatchedHistory() {
       isLazy
       lazyBehavior="keepMounted"
     >
-      <HStack>
+      <HStack className="text-white/80 hover:text-white transition-all">
         <PopoverTrigger>
-          <HStack>
-            <SlEye />
+          <Button leftIcon={<SlEye />} aria-label="eye-icon">
             <Text>Watch List</Text>
-          </HStack>
+          </Button>
         </PopoverTrigger>
       </HStack>
 
@@ -82,6 +82,7 @@ export default function WatchedHistory() {
           {watchList.length ? (
             watchList.map((news) => (
               <Link
+                key={news.title}
                 href={{
                   pathname: "/news",
                   query: { data: JSON.stringify(news) },

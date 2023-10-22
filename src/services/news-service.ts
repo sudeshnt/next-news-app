@@ -82,3 +82,17 @@ export async function readNewsDetailsFromUrl(url: string): Promise<any> {
     throw new Error((error as Error).message);
   }
 }
+
+export async function errorAPI(): Promise<any> {
+  try {
+    const res = await fetch(`${NEWS_HOST}/sources?apiKey`);
+    const result = await res.json();
+    if (result.status === "ok") {
+      return result.sources;
+    } else {
+      throw result;
+    }
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
+}

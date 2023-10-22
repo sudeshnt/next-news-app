@@ -41,7 +41,7 @@ export default function NewsListHeader(props: NewsListHeaderProps) {
     setTimeout(() => {
       setIsLoading(false);
     }, 300);
-  }, [searchData]);
+  }, [searchData, router]);
 
   return (
     <>

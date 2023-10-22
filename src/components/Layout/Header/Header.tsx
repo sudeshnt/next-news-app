@@ -1,6 +1,8 @@
 import WatchedHistory from "@/components/News/WatchedHistory/WatchedHistory";
+import { HStack } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
+import ErrorAPIButton from "../ErrorAPIButton/ErrorAPIButton";
 
 const Header = () => {
   return (
@@ -16,7 +18,10 @@ const Header = () => {
             priority
           />
         </Link>
-        <WatchedHistory />
+        <HStack>
+          <WatchedHistory />
+          <ErrorAPIButton />
+        </HStack>
       </div>
     </header>
   );

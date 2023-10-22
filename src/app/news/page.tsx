@@ -27,7 +27,7 @@ export default async function NewsDetailsPage({ searchParams }: NextPageProps) {
   return (
     <div className="page max-h-[calc(100vh-60px)] overflow-y-scroll hide-scrollbar pt-8">
       <Link href={"/"}>
-        <HStack className="text-base font-medium mb-5">
+        <HStack className="text-base font-medium mb-5 text-primary hover:text-white">
           <IoMdArrowBack />
           <Text>back to Latest News</Text>
         </HStack>
@@ -47,6 +47,7 @@ export default async function NewsDetailsPage({ searchParams }: NextPageProps) {
         mb={6}
         src={news.urlToImage}
         className="float-right h-300"
+        alt="news-image"
       />
       <Text mb={20} whiteSpace="pre-wrap">
         {article?.replace(/\n{2,}/g, "")}

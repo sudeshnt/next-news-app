@@ -71,13 +71,15 @@ export default function NewsSearchInput(props: NewsSearchInputProps) {
     });
   };
 
-  const debounceFn = useCallback(debounce(handleOnChangeSearchText, 1000), []);
+  const debounceFn = useCallback(debounce(handleOnChangeSearchText, 1000), [
+    debounce,
+  ]);
 
   useEffect(() => {
     fetchNewsSources().then((newsSources) => {
       setNewsSources(newsSources);
     });
-  }, []);
+  }, [setNewsSources]);
 
   return (
     <HStack gap={0}>
