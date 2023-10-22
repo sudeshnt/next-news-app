@@ -2,8 +2,8 @@
 
 import Loading from "@/app/loading";
 import { SearchData } from "@/services/types";
+import { useNewsStore } from "@/store/News";
 import { Box, Heading } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import NewsCategories from "../NewsCategories/NewsCategories";
 import Pagination from "../NewsGrid/Pagination";
@@ -16,15 +16,11 @@ const DEFAULT_SEARCH_DATA: SearchData = {
   page: "1",
 };
 
-type NewsListHeaderProps = {
-  pages: number;
-};
+export default function NewsListHeader() {
+  const fetch = useNewsStore((state) => state.fetch);
+  const totalPages = useNewsStore((state) => state.totalPages);
+  const isFetchingNews = useNewsStore((state) => state.isFetchingNews);
 
-export default function NewsListHeader(props: NewsListHeaderProps) {
-  const { pages } = props;
-  const router = useRouter();
-
-  const [isLoading, setIsLoading] = useState(false);
   const [searchData, setSearchData] = useState(DEFAULT_SEARCH_DATA);
 
   const handleChangeSearchData = (data: Partial<SearchData>) => {
@@ -35,17 +31,12 @@ export default function NewsListHeader(props: NewsListHeaderProps) {
   };
 
   useEffect(() => {
-    setIsLoading(true);
-    const queryString = new URLSearchParams(searchData).toString();
-    router.push(`?${queryString}`);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 300);
-  }, [searchData, router]);
+    fetch(searchData);
+  }, [searchData, fetch]);
 
   return (
     <>
-      {isLoading && <Loading />}
+      {isFetchingNews && <Loading />}
       <Box className="flex flex-col md:flex-row md:justify-between">
         <Heading className="mb-4" variant="2xl">
           Latest News
@@ -57,7 +48,7 @@ export default function NewsListHeader(props: NewsListHeaderProps) {
         onChangeSearchData={handleChangeSearchData}
       />
       <Pagination
-        pages={pages}
+        pages={totalPages}
         searchData={searchData}
         onChangeSearchData={handleChangeSearchData}
       />

@@ -30,3 +30,8 @@ export type SearchData = {
   category: string;
   page: string;
 };
+
+export type FetchNewsResult = {
+  totalResults: number;
+  articles: News[];
+};

@@ -3,8 +3,8 @@
 import identity from "lodash/identity";
 import pickBy from "lodash/pickBy";
 import {
+  FetchNewsResult,
   PAGE_SIZE,
-  type News,
   type NewsSource,
   type SearchData,
 } from "./types";
@@ -15,10 +15,9 @@ import pick from "lodash/pick";
 
 const NEWS_HOST = "https://newsapi.org/v2";
 
-export async function fetchNews(searchData: Partial<SearchData>): Promise<{
-  totalResults: number;
-  articles: News[];
-}> {
+export async function fetchNews(
+  searchData: Partial<SearchData> = {}
+): Promise<FetchNewsResult> {
   try {
     const formattedSearchData = pickBy(searchData, identity);
     const queryString = new URLSearchParams({
@@ -67,7 +66,7 @@ export async function fetchNewsSources(): Promise<NewsSource[]> {
   }
 }
 
-export async function readNewsDetailsFromUrl(url: string): Promise<any> {
+export async function readNewsDetailsFromUrl(url: string): Promise<string> {
   try {
     const res = await fetch(url, {
       cache: "no-cache",
@@ -77,13 +76,13 @@ export async function readNewsDetailsFromUrl(url: string): Promise<any> {
       url,
     });
     let article = new Readability(dom.window.document).parse();
-    return article?.textContent;
+    return article?.textContent ?? "";
   } catch (error) {
     throw new Error((error as Error).message);
   }
 }
 
-export async function errorAPI(): Promise<any> {
+export async function errorAPI(): Promise<unknown> {
   try {
     const res = await fetch(`${NEWS_HOST}/sources?apiKey`);
     const result = await res.json();

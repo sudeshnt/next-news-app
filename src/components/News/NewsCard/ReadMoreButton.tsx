@@ -1,8 +1,8 @@
 "use client";
 
 import { News } from "@/services/types";
+import { useNewsStore } from "@/store/News";
 import { Button } from "@chakra-ui/react";
-import localforage from "localforage";
 import Link from "next/link";
 
 type ReadMoreButtonProps = {
@@ -10,19 +10,10 @@ type ReadMoreButtonProps = {
 };
 
 export default function ReadMoreButton({ news }: ReadMoreButtonProps) {
+  const addToWatchList = useNewsStore((state) => state.addToWatchList);
+
   const onClickReadMore = async () => {
-    try {
-      let watchList: News[] = (await localforage.getItem("watch-list")) ?? [];
-      const isNewsAlreadyInWatchList = watchList.some(
-        (newsItem) => newsItem.title === news.title
-      );
-      if (!isNewsAlreadyInWatchList) {
-        watchList.push(news);
-      }
-      await localforage.setItem("watch-list", watchList);
-    } catch (err) {
-      console.log(err);
-    }
+    addToWatchList(news);
   };
 
   return (

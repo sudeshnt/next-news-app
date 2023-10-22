@@ -1,13 +1,11 @@
-import { News } from "@/services/types";
+"use client";
+
+import { useNewsStore } from "@/store/News";
 import { Box } from "@chakra-ui/react";
 import NewsCard from "../NewsCard/NewsCard";
 
-type NewsGridProps = {
-  newsList: News[];
-};
-
-export default function NewsGrid(props: NewsGridProps) {
-  const { newsList } = props;
+export default function NewsGrid() {
+  const newsList = useNewsStore((state) => state.news);
 
   return (
     <>

@@ -1,28 +1,18 @@
 import { readNewsDetailsFromUrl } from "@/services/news-service";
-import { News } from "@/services/types";
 import { NextPageProps } from "@/types";
+import { parseJsonSafely } from "@/utils";
 import { Box, HStack, Heading, Image, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import { IoMdArrowBack } from "react-icons/io";
 
-const parseJsonSafely = (str: string | undefined): News | null => {
-  if (str) {
-    try {
-      let jsonObject = JSON.parse(str);
-      return jsonObject;
-    } catch (err) {
-      return null;
-    }
-  } else {
-    return null;
-  }
-};
-
 export default async function NewsDetailsPage({ searchParams }: NextPageProps) {
-  const news = parseJsonSafely(searchParams?.data);
-  const article = news?.url ? await readNewsDetailsFromUrl(news.url) : "";
+  const newsDetails = parseJsonSafely(searchParams?.data);
 
-  if (!news) return null;
+  if (!newsDetails) return null;
+
+  const article = newsDetails?.url
+    ? await readNewsDetailsFromUrl(newsDetails.url)
+    : "";
 
   return (
     <div className="page max-h-[calc(100vh-60px)] overflow-y-scroll hide-scrollbar pt-8">
@@ -32,20 +22,20 @@ export default async function NewsDetailsPage({ searchParams }: NextPageProps) {
           <Text>back to Latest News</Text>
         </HStack>
       </Link>
-      <Heading variant="2xl">{news.title}</Heading>
+      <Heading variant="2xl">{newsDetails.title}</Heading>
       <Box
         mb={6}
         className="flex flex-col text-primary md:flex-row md:justify-between"
       >
         <Text mb={2}>
-          by {news.author}, {news.source?.name}
+          by {newsDetails.author}, {newsDetails.source?.name}
         </Text>
-        <Text>{new Date(news.publishedAt).toLocaleString()}</Text>
+        <Text>{new Date(newsDetails.publishedAt).toLocaleString()}</Text>
       </Box>
       <Image
         w="full"
         mb={6}
-        src={news.urlToImage}
+        src={newsDetails.urlToImage}
         className="float-right h-300"
         alt="news-image"
       />

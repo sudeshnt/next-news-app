@@ -22,7 +22,7 @@ type NewsSearchInputProps = {
   onChangeSearchData: (data: Partial<SearchData>) => void;
 };
 
-const styles: StylesConfig<any> = {
+const styles: StylesConfig = {
   control: (styles, state) => ({
     ...styles,
     backgroundColor: "none",
@@ -91,7 +91,7 @@ export default function NewsSearchInput(props: NewsSearchInputProps) {
         placeholder="All Sources"
         isClearable
         options={newsSourcesOptions}
-        onChange={handleOnChangeSearchSource}
+        onChange={(value) => handleOnChangeSearchSource(value as OptionType)}
       />
       <Input
         w={200}

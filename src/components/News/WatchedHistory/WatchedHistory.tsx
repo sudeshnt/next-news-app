@@ -1,6 +1,6 @@
 "use client";
 
-import { News } from "@/services/types";
+import { useNewsStore } from "@/store/News";
 import {
   Button,
   Card,
@@ -15,42 +15,24 @@ import {
   Text,
   useBoolean,
 } from "@chakra-ui/react";
-import localforage from "localforage";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { IoMdClose } from "react-icons/io";
 import { SlEye } from "react-icons/sl";
 
 export default function WatchedHistory() {
-  const pathName = usePathname();
   const [isOpen, setIsOpen] = useBoolean();
-  const [watchList, setWatchList] = useState<News[]>([]);
 
-  const handleClickCloseButton = (title: string) => {
-    localforage
-      .getItem<News[]>("watch-list")
-      .then((data) => {
-        const filteredWatchList = data?.filter((news) => news.title !== title);
-        setWatchList(filteredWatchList ?? []);
-        localforage.setItem("watch-list", filteredWatchList);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  const watchList = useNewsStore((state) => state.watchList);
+  const populateWatchList = useNewsStore((state) => state.populateWatchList);
+  const removeFromWatchList = useNewsStore(
+    (state) => state.removeFromWatchList
+  );
 
   useEffect(() => {
-    localforage
-      .getItem<News[]>("watch-list")
-      .then((data) => {
-        setWatchList(data ?? []);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [pathName]);
+    populateWatchList();
+  }, [populateWatchList]);
 
   return (
     <Popover
@@ -103,7 +85,7 @@ export default function WatchedHistory() {
                     className="rounded-lg"
                     objectFit="cover"
                     src={news.urlToImage ?? "/images/fallback_image.png"}
-                    alt="Caffe Latte"
+                    alt="news-image"
                   />
                   <CardBody display="flex" alignItems="center" pl={10}>
                     <Text>{news.title}</Text>
@@ -115,7 +97,7 @@ export default function WatchedHistory() {
                     className="absolute top-2 right-2 text-primary"
                     onClick={(e) => {
                       e.preventDefault();
-                      handleClickCloseButton(news.title);
+                      removeFromWatchList(news.title);
                     }}
                   />
                 </Card>
