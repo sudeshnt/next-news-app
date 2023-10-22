@@ -1,29 +1,22 @@
 "use client";
 
+import { SearchData } from "@/services/types";
 import { Box } from "@chakra-ui/react";
 import range from "lodash/range";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type PaginationProps = {
   pages: number;
+  searchData: SearchData;
+  onChangeSearchData: (data: Partial<SearchData>) => void;
 };
 
 export default function Pagination(props: PaginationProps) {
-  const { pages } = props;
+  const { pages, searchData, onChangeSearchData } = props;
 
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const formattedSearchParams = new URLSearchParams(
-    Array.from(searchParams.entries())
-  );
-  const selectedPage = formattedSearchParams.get("page") ?? 1;
+  const selectedPage = searchData.page;
 
   const handleOnChangePage = (page: number) => {
-    formattedSearchParams.set("page", page.toString());
-    const search = formattedSearchParams.toString();
-    const query = search ? `?${search}` : "";
-    router.push(`${pathname}${query}`);
+    onChangeSearchData({ page: page.toString() });
   };
 
   return (

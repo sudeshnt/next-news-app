@@ -3,12 +3,13 @@
 import { fetchNewsSources } from "@/services/news-service";
 import { NewsSource, SearchData } from "@/services/types";
 import { HStack, Input } from "@chakra-ui/react";
+import debounce from "lodash/debounce";
 import {
   ChangeEventHandler,
+  useCallback,
   useEffect,
   useMemo,
   useState,
-  useTransition,
 } from "react";
 import Select, { StylesConfig } from "react-select";
 
@@ -43,8 +44,6 @@ export default function NewsSearchInput(props: NewsSearchInputProps) {
 
   const [newsSources, setNewsSources] = useState<NewsSource[]>([]);
 
-  const [isPending, startTransition] = useTransition();
-
   const newsSourcesOptions: OptionType[] = useMemo(
     () =>
       newsSources.map((newsSource) => ({
@@ -58,6 +57,7 @@ export default function NewsSearchInput(props: NewsSearchInputProps) {
     onChangeSearchData({
       sources: option?.value ?? "",
       category: "",
+      page: "1",
     });
   };
 
@@ -65,16 +65,16 @@ export default function NewsSearchInput(props: NewsSearchInputProps) {
     event
   ) => {
     const q = event.target.value;
-    if (q.length === 0 || q.length > 2) {
-      onChangeSearchData({
-        q,
-      });
-    }
+    onChangeSearchData({
+      q,
+      page: "1",
+    });
   };
 
+  const debounceFn = useCallback(debounce(handleOnChangeSearchText, 1000), []);
+
   useEffect(() => {
-    startTransition(async () => {
-      const newsSources = await fetchNewsSources();
+    fetchNewsSources().then((newsSources) => {
       setNewsSources(newsSources);
     });
   }, []);
@@ -87,7 +87,6 @@ export default function NewsSearchInput(props: NewsSearchInputProps) {
         placeholder="All Sources"
         isClearable
         options={newsSourcesOptions}
-        isLoading={isPending}
         onChange={handleOnChangeSearchSource}
       />
       <Input
@@ -99,7 +98,7 @@ export default function NewsSearchInput(props: NewsSearchInputProps) {
           boxShadow: "none",
           borderColor: "initial",
         }}
-        onChange={handleOnChangeSearchText}
+        onChange={debounceFn}
       />
     </HStack>
   );

@@ -28,4 +28,5 @@ export type SearchData = {
   q: string;
   sources: string;
   category: string;
+  page: string;
 };

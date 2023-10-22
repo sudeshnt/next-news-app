@@ -28,7 +28,7 @@ export default function NewsCategories(props: NewsCategoriesProps) {
   ];
 
   const handleOnChangeCategory = (category: string) => {
-    onChangeSearchData({ category });
+    onChangeSearchData({ category, page: "1" });
   };
 
   return (
