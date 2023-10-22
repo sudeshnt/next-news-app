@@ -2,7 +2,7 @@
 
 import { fetchNewsSources } from "@/services/news-service";
 import { NewsSource, SearchData } from "@/services/types";
-import { HStack, Input } from "@chakra-ui/react";
+import { HStack, Input, Spinner } from "@chakra-ui/react";
 import debounce from "lodash/debounce";
 import {
   ChangeEventHandler,
@@ -42,6 +42,7 @@ const styles: StylesConfig<any> = {
 export default function NewsSearchInput(props: NewsSearchInputProps) {
   const { onChangeSearchData } = props;
 
+  const [isLoading, setIsLoading] = useState(false);
   const [newsSources, setNewsSources] = useState<NewsSource[]>([]);
 
   const newsSourcesOptions: OptionType[] = useMemo(
@@ -64,6 +65,7 @@ export default function NewsSearchInput(props: NewsSearchInputProps) {
   const handleOnChangeSearchText: ChangeEventHandler<HTMLInputElement> = (
     event
   ) => {
+    setIsLoading(false);
     const q = event.target.value;
     onChangeSearchData({
       q,
@@ -82,7 +84,7 @@ export default function NewsSearchInput(props: NewsSearchInputProps) {
   }, [setNewsSources]);
 
   return (
-    <HStack gap={0}>
+    <HStack gap={0} mr={isLoading ? "-16px" : 0}>
       <Select
         styles={styles}
         className="text-secondary"
@@ -100,8 +102,14 @@ export default function NewsSearchInput(props: NewsSearchInputProps) {
           boxShadow: "none",
           borderColor: "initial",
         }}
-        onChange={debounceFn}
+        onChange={(e) => {
+          setIsLoading(true);
+          debounceFn(e);
+        }}
       />
+      {isLoading && (
+        <Spinner color="red.500" size="sm" position="relative" right={30} />
+      )}
     </HStack>
   );
 }
