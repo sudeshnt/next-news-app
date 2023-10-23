@@ -13,7 +13,7 @@ export default async function NewsDetailsPage({ searchParams }: NextPageProps) {
   const article = await readNewsDetailsFromUrl(newsDetails.url);
 
   return (
-    <div className="page max-h-[calc(100vh-60px)] overflow-y-scroll hide-scrollbar pt-8 px-[8%]">
+    <div className="page max-h-[calc(100vh-60px)] overflow-y-scroll hide-scrollbar sm:pt-8 lg:px-[8%]">
       <Link href={"/"}>
         <HStack className="text-base font-medium mb-5 text-primary hover:text-white">
           <IoMdArrowBack />
@@ -35,9 +35,8 @@ export default async function NewsDetailsPage({ searchParams }: NextPageProps) {
       <div>
         <Image
           mx="auto"
-          w="full"
-          src={newsDetails.urlToImage}
-          className="max-w-screen-sm mb-5 lg:float-right lg:ml-5"
+          src={newsDetails.urlToImage ?? "/images/fallback_image.png"}
+          className="max-h-80 mb-5 lg:float-right lg:ml-5"
           alt="news-image "
         />
         <Text mb={20} wordBreak="break-all">

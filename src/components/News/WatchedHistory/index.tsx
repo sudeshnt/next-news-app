@@ -55,10 +55,9 @@ export default function WatchedHistory() {
         bgColor="white"
         p={10}
         w="full"
-        maxW={400}
         maxH={500}
         overflow="scroll"
-        className="mr-[10vw] hide-scrollbar"
+        className="mr-[10vw] hide-scrollbar max-w-[330px] sm:max-w-[400px]"
       >
         <PopoverBody className="text-secondary/80 text-sm">
           {watchList.length ? (
