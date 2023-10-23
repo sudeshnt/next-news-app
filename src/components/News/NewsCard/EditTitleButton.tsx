@@ -1,5 +1,6 @@
 "use client";
 
+import { useNewsStore } from "@/store/News";
 import {
   Button,
   FormControl,
@@ -17,6 +18,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { RiEditBoxLine } from "react-icons/ri";
 import * as z from "zod";
@@ -35,25 +37,31 @@ type TitleFormData = {
 export default function EditTitleButton(props: TitleFormData) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const editNewsTitle = useNewsStore((state) => state.editNewsTitle);
+
   const {
     register,
     handleSubmit,
-    watch,
     reset,
     formState: { isValid, errors },
   } = useForm<TitleFormData>({
     mode: "onChange",
-    defaultValues: {
-      title: props.title,
-    },
     resolver: zodResolver(newsTitleFormValidationSchema),
   });
 
-  const onSubmit: SubmitHandler<TitleFormData> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<TitleFormData> = (data) => {
+    editNewsTitle(props.title, data.title);
+    onCloseModal();
+  };
 
   const onCloseModal = () => {
     onClose();
+    reset({});
   };
+
+  useEffect(() => {
+    reset({ title: props.title });
+  }, [props.title]);
 
   return (
     <>

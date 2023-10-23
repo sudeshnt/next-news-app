@@ -17,7 +17,7 @@ const DEFAULT_SEARCH_DATA: SearchData = {
 };
 
 export default function NewsListHeader() {
-  const fetch = useNewsStore((state) => state.fetch);
+  const fetchNews = useNewsStore((state) => state.populateNews);
   const totalPages = useNewsStore((state) => state.totalPages);
   const isFetchingNews = useNewsStore((state) => state.isFetchingNews);
 
@@ -31,7 +31,7 @@ export default function NewsListHeader() {
   };
 
   useEffect(() => {
-    fetch(searchData);
+    fetchNews(searchData);
   }, [searchData, fetch]);
 
   return (
