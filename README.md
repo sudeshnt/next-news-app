@@ -52,12 +52,12 @@
   <img src="public/app-screenshots/3.png" alt="Logo" height="200">
   <img src="public/app-screenshots/4.png" alt="Logo" height="205">
   <img src="public/app-screenshots/6.png" alt="Logo" height="205">
-  <img src="public/app-screenshots/5.png" alt="Logo" height="173">
-  <img src="public/app-screenshots/7.png" alt="Logo" height="173">
+  <img src="public/app-screenshots/5.png" alt="Logo" height="195">
+  <img src="public/app-screenshots/7.png" alt="Logo" height="195">
   <img src="public/app-screenshots/9.png" alt="Logo" height="300">
   <img src="public/app-screenshots/11.png" alt="Logo" height="300">
   <img src="public/app-screenshots/10.png" alt="Logo" height="300">
-  <img src="public/app-screenshots/8.png" alt="Logo" height="100">
+  <img src="public/app-screenshots/8.png" alt="Logo" height="120">
 </div>
 <br />
 
