@@ -30,10 +30,7 @@ export async function fetchNews(
     }).toString();
     console.log(`${NEWS_HOST}/top-headlines?${queryString}`);
     const res = await fetch(`${NEWS_HOST}/top-headlines?${queryString}`, {
-      cache: "no-cache",
-      next: {
-        tags: ["news"],
-      },
+      cache: "no-store",
     });
     const result = await res.json();
     if (result.status === "ok") {

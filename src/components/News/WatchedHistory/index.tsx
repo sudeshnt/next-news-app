@@ -87,7 +87,7 @@ export default function WatchedHistory() {
                     alt="news-image"
                   />
                   <CardBody display="flex" alignItems="center" pl={10}>
-                    <Text>{news.title}</Text>
+                    <Text pr={20}>{news.title}</Text>
                   </CardBody>
                   <IconButton
                     size="sm"

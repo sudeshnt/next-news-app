@@ -38,6 +38,7 @@ const styles: StylesConfig = {
     minWidth: 160,
   }),
   singleValue: (styles, { data }) => ({ ...styles, color: "white" }),
+  input: (styles) => ({ ...styles, color: "white" }),
 };
 
 export default function NewsSearchInput(props: NewsSearchInputProps) {
