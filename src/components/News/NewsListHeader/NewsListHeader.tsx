@@ -5,9 +5,9 @@ import { SearchData } from "@/services/types";
 import { useNewsStore } from "@/store/News";
 import { Box, Heading } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import NewsCategories from "../NewsCategories/NewsCategories";
-import Pagination from "../NewsGrid/Pagination";
-import NewsSearchInput from "../NewsSearchInput/NewsSearchInput";
+import NewsCategories from "./NewsCategories";
+import NewsSearchInput from "./NewsSearchInput";
+import Pagination from "./Pagination";
 
 const DEFAULT_SEARCH_DATA: SearchData = {
   q: "",
@@ -41,7 +41,10 @@ export default function NewsListHeader() {
         <Heading className="mb-4" variant="2xl">
           Latest News
         </Heading>
-        <NewsSearchInput onChangeSearchData={handleChangeSearchData} />
+        <NewsSearchInput
+          searchData={searchData}
+          onChangeSearchData={handleChangeSearchData}
+        />
       </Box>
       <NewsCategories
         searchData={searchData}
