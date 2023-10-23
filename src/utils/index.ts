@@ -1,9 +1,17 @@
 import { News } from "@/services/types";
 
-export const parseJsonSafely = (str: string | undefined): News | null => {
-  if (str) {
+/**
+ * Safely parses a JSON string.
+ *
+ * @param {string | undefined} jsonString - The JSON string to parse.
+ * @returns {News | null} The parsed object if the parsing was successful, null otherwise.
+ */
+export const parseJsonSafely = (
+  jsonString: string | undefined
+): News | null => {
+  if (jsonString) {
     try {
-      let jsonObject = JSON.parse(str);
+      let jsonObject = JSON.parse(jsonString);
       return jsonObject;
     } catch (err) {
       return null;
