@@ -61,7 +61,7 @@ export default function EditTitleButton(props: TitleFormData) {
 
   useEffect(() => {
     reset({ title: props.title });
-  }, [props.title]);
+  }, [props.title, reset]);
 
   return (
     <>

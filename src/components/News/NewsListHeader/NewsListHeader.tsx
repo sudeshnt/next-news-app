@@ -32,7 +32,7 @@ export default function NewsListHeader() {
 
   useEffect(() => {
     fetchNews(searchData);
-  }, [searchData, fetch]);
+  }, [searchData, fetchNews]);
 
   return (
     <>
