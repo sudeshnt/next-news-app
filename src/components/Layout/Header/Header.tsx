@@ -1,4 +1,4 @@
-import WatchedHistory from "@/components/News/WatchedHistory/WatchedHistory";
+import WatchedHistory from "@/components/News/WatchedHistory";
 import { HStack } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";

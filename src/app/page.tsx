@@ -1,5 +1,5 @@
-import NewsGrid from "@/components/News/NewsGrid/NewsGrid";
-import NewsListHeader from "@/components/News/NewsListHeader/NewsListHeader";
+import NewsGrid from "@/components/News/NewsGrid";
+import NewsListHeader from "@/components/News/NewsListHeader";
 import { Box } from "@chakra-ui/react";
 
 export default async function Home() {

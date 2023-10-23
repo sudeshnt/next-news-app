@@ -2,7 +2,7 @@
 
 import { useNewsStore } from "@/store/News";
 import { Box } from "@chakra-ui/react";
-import NewsCard from "../NewsCard/NewsCard";
+import NewsCard from "../NewsCard";
 
 export default function NewsGrid() {
   const newsList = useNewsStore((state) => state.news);
