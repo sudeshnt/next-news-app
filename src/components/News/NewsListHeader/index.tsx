@@ -17,11 +17,12 @@ const DEFAULT_SEARCH_DATA: SearchData = {
 };
 
 export default function NewsListHeader() {
+  const [searchData, setSearchData] = useState(DEFAULT_SEARCH_DATA);
+
   const fetchNews = useNewsStore((state) => state.populateNews);
+
   const totalPages = useNewsStore((state) => state.totalPages);
   const isFetchingNews = useNewsStore((state) => state.isFetchingNews);
-
-  const [searchData, setSearchData] = useState(DEFAULT_SEARCH_DATA);
 
   const handleChangeSearchData = (data: Partial<SearchData>) => {
     setSearchData((prev) => ({

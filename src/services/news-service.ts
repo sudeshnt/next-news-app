@@ -9,6 +9,7 @@ import {
   type SearchData,
 } from "./types";
 
+import { removeDuplicateSpaces } from "@/utils";
 import { Readability } from "@mozilla/readability";
 import { JSDOM } from "jsdom";
 import pick from "lodash/pick";
@@ -29,6 +30,7 @@ export async function fetchNews(
     }).toString();
     console.log(`${NEWS_HOST}/top-headlines?${queryString}`);
     const res = await fetch(`${NEWS_HOST}/top-headlines?${queryString}`, {
+      cache: "no-cache",
       next: {
         tags: ["news"],
       },
@@ -68,6 +70,7 @@ export async function fetchNewsSources(): Promise<NewsSource[]> {
 
 export async function readNewsDetailsFromUrl(url: string): Promise<string> {
   try {
+    if (!url) return "";
     const res = await fetch(url, {
       cache: "no-cache",
     });
@@ -76,7 +79,7 @@ export async function readNewsDetailsFromUrl(url: string): Promise<string> {
       url,
     });
     let article = new Readability(dom.window.document).parse();
-    return article?.textContent ?? "";
+    return removeDuplicateSpaces(article?.textContent ?? "");
   } catch (error) {
     throw new Error((error as Error).message);
   }

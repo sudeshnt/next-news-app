@@ -16,6 +16,7 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
@@ -35,6 +36,7 @@ type TitleFormData = {
 };
 
 export default function EditTitleButton(props: TitleFormData) {
+  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const editNewsTitle = useNewsStore((state) => state.editNewsTitle);
@@ -52,6 +54,11 @@ export default function EditTitleButton(props: TitleFormData) {
   const onSubmit: SubmitHandler<TitleFormData> = (data) => {
     editNewsTitle(props.title, data.title);
     onCloseModal();
+    toast({
+      title: "Title updated",
+      status: "success",
+      isClosable: true,
+    });
   };
 
   const onCloseModal = () => {

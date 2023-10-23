@@ -14,9 +14,7 @@ export default function NewsCard(props: NewsCardProps) {
     <Box className="group relative cursor-pointer overflow-hidden transition-shadow hover:shadow-xl hover:shadow-black/30">
       <Box className="h-96 ">
         <Image
-          className={`h-full ${
-            news.urlToImage ? "object-cover" : "object-contain"
-          } transition-transform duration-600 group-hover:rotate-3 group-hover:scale-125`}
+          className={`h-full object-cover transition-transform duration-600 group-hover:rotate-3 group-hover:scale-125`}
           src={news.urlToImage ?? "/images/fallback_image.png"}
           alt=""
         />
