@@ -27,7 +27,7 @@ export default function Pagination(props: PaginationProps) {
         <span
           key={page}
           onClick={() => handleOnChangePage(page)}
-          className={`px-3 py-1 border cursor-pointer transition-all hover:border-white/80   ${
+          className={`px-3 py-1 border cursor-pointer transition-all hover:border-white/80 ${
             selectedPage === page
               ? "text-secondary border-secondary/50 bg-slate-100"
               : "text-primary/60 border-primary/60 hover:text-white/80"

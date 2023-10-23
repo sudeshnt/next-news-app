@@ -17,7 +17,7 @@ export const useNewsStore = create<NewsState>((set, get) => ({
       set({ totalPages: Math.ceil(response.totalResults / PAGE_SIZE) });
       set({ isFetchingNews: false });
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   },
   populateWatchList: async () => {
@@ -25,7 +25,7 @@ export const useNewsStore = create<NewsState>((set, get) => ({
       const watchList = (await localforage.getItem<News[]>("watch-list")) ?? [];
       set({ watchList });
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
     localforage
       .getItem<News[]>("watch-list")
@@ -33,7 +33,7 @@ export const useNewsStore = create<NewsState>((set, get) => ({
         set({ watchList: data ?? [] });
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   },
   addToWatchList: async (news: News) => {
@@ -47,7 +47,7 @@ export const useNewsStore = create<NewsState>((set, get) => ({
       }
       await localforage.setItem("watch-list", watchList);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   },
   removeFromWatchList: async (title: string) => {
@@ -57,7 +57,7 @@ export const useNewsStore = create<NewsState>((set, get) => ({
       set({ watchList: updatedWatchList });
       await localforage.setItem("watch-list", updatedWatchList);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   },
   editNewsTitle: (title: string, updatedTitle: string) => {

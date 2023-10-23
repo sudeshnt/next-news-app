@@ -20,3 +20,13 @@ export const parseJsonSafely = (
     return null;
   }
 };
+
+/**
+ * Removes duplicate spaces, tabs, and newlines from a string.
+ *
+ * @param str - The input string to be cleaned.
+ * @returns The cleaned string with no duplicate whitespace.
+ */
+export const removeDuplicateSpaces = (str: string) => {
+  return str?.replace(/[\r\n]{2,}/g, "\n").replace(/\s\s+/g, " ");
+};
