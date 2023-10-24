@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import Loading from "@/app/loading";
-import { SearchData } from "@/services/types";
-import { useNewsStore } from "@/store/News";
-import { Box, Heading } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import NewsCategories from "./NewsCategories";
-import NewsSearchInput from "./NewsSearchInput";
-import Pagination from "./Pagination";
+import Loading from '@/app/loading';
+import { SearchData } from '@/services/types';
+import useNewsStore from '@/store/News';
+import { Box, Heading } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import NewsCategories from './NewsCategories';
+import NewsSearchInput from './NewsSearchInput';
+import Pagination from './Pagination';
 
 const DEFAULT_SEARCH_DATA: SearchData = {
-  q: "",
-  sources: "",
-  category: "",
-  page: "1",
+  q: '',
+  sources: '',
+  category: '',
+  page: '1',
 };
 
 export default function NewsListHeader() {
@@ -38,8 +38,8 @@ export default function NewsListHeader() {
   return (
     <>
       {isFetchingNews && <Loading />}
-      <Box className="flex flex-col md:flex-row md:justify-between">
-        <Heading className="mb-4" variant="2xl">
+      <Box className='flex flex-col md:flex-row md:justify-between'>
+        <Heading className='mb-4' variant='2xl'>
           Latest News
         </Heading>
         <NewsSearchInput

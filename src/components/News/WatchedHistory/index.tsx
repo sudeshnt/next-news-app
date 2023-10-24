@@ -1,6 +1,5 @@
-"use client";
+'use client';
 
-import { useNewsStore } from "@/store/News";
 import {
   Button,
   Card,
@@ -14,12 +13,13 @@ import {
   PopoverTrigger,
   Text,
   useBoolean,
-} from "@chakra-ui/react";
-import Link from "next/link";
-import { useEffect } from "react";
+} from '@chakra-ui/react';
+import Link from 'next/link';
+import { useEffect } from 'react';
 
-import { IoMdClose } from "react-icons/io";
-import { SlEye } from "react-icons/sl";
+import useNewsStore from '@/store/News';
+import { IoMdClose } from 'react-icons/io';
+import { SlEye } from 'react-icons/sl';
 
 export default function WatchedHistory() {
   const [isOpen, setIsOpen] = useBoolean();
@@ -27,7 +27,7 @@ export default function WatchedHistory() {
   const watchList = useNewsStore((state) => state.watchList);
   const populateWatchList = useNewsStore((state) => state.populateWatchList);
   const removeFromWatchList = useNewsStore(
-    (state) => state.removeFromWatchList
+    (state) => state.removeFromWatchList,
   );
 
   useEffect(() => {
@@ -40,11 +40,11 @@ export default function WatchedHistory() {
       onOpen={setIsOpen.on}
       onClose={setIsOpen.off}
       isLazy
-      lazyBehavior="keepMounted"
+      lazyBehavior='keepMounted'
     >
-      <HStack className="text-primary hover:text-white transition-all">
+      <HStack className='text-primary hover:text-white transition-all'>
         <PopoverTrigger>
-          <Button leftIcon={<SlEye />} aria-label="eye-icon">
+          <Button leftIcon={<SlEye />} aria-label='eye-icon'>
             <Text>Watch List</Text>
           </Button>
         </PopoverTrigger>
@@ -52,20 +52,20 @@ export default function WatchedHistory() {
 
       <PopoverContent
         borderRadius={10}
-        bgColor="white"
+        bgColor='white'
         p={10}
-        w="full"
+        w='full'
         maxH={500}
-        overflow="scroll"
-        className="mr-[10vw] hide-scrollbar max-w-[330px] sm:max-w-[400px]"
+        overflow='scroll'
+        className='mr-[10vw] hide-scrollbar max-w-[330px] sm:max-w-[400px]'
       >
-        <PopoverBody className="text-secondary/80 text-sm">
+        <PopoverBody className='text-secondary/80 text-sm'>
           {watchList.length ? (
             watchList.map((news) => (
               <Link
                 key={news.title}
                 href={{
-                  pathname: "/news",
+                  pathname: '/news',
                   query: { data: JSON.stringify(news) },
                 }}
                 onClick={setIsOpen.off}
@@ -73,27 +73,27 @@ export default function WatchedHistory() {
                 <Card
                   p={5}
                   mb={5}
-                  className="cursor-pointe  shadow rounded-lg"
-                  direction={{ base: "column", sm: "row" }}
-                  overflow="hidden"
-                  variant="outline"
+                  className='cursor-pointe  shadow rounded-lg'
+                  direction={{ base: 'column', sm: 'row' }}
+                  overflow='hidden'
+                  variant='outline'
                 >
                   <Image
                     width={80}
                     height={80}
-                    className="rounded-lg"
-                    objectFit="cover"
-                    src={news.urlToImage ?? "/images/fallback_image.png"}
-                    alt="news-image"
+                    className='rounded-lg'
+                    objectFit='cover'
+                    src={news.urlToImage ?? '/images/fallback_image.png'}
+                    alt='news-image'
                   />
-                  <CardBody display="flex" alignItems="center" pl={10}>
+                  <CardBody display='flex' alignItems='center' pl={10}>
                     <Text pr={20}>{news.title}</Text>
                   </CardBody>
                   <IconButton
-                    size="sm"
-                    aria-label="Remove"
+                    size='sm'
+                    aria-label='Remove'
                     icon={<IoMdClose />}
-                    className="absolute top-2 right-2 text-primary"
+                    className='absolute top-2 right-2 text-primary'
                     onClick={(e) => {
                       e.preventDefault();
                       removeFromWatchList(news.title);
@@ -103,7 +103,7 @@ export default function WatchedHistory() {
               </Link>
             ))
           ) : (
-            <Text minW={200} align="center">
+            <Text minW={200} align='center'>
               No Items on Watch List
             </Text>
           )}
