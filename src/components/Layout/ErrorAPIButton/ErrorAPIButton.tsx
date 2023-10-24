@@ -11,9 +11,10 @@ export default function ErrorAPIButton() {
 
   const handleOnClickErrorAPIButton = () => {
     startTransition(() => {
-      errorAPI().catch((error) => {
+      errorAPI().catch(() => {
         toast({
-          title: (error as unknown as Error).message,
+          title:
+            'Your API key is invalid or incorrect. Check your key, or go to https://newsapi.org to create a free API key.',
           status: 'error',
           isClosable: true,
         });
