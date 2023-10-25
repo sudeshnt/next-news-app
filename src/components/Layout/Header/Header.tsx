@@ -1,22 +1,22 @@
-"use client";
+'use client';
 
-import WatchedHistory from "@/components/News/WatchedHistory";
-import { HStack } from "@chakra-ui/react";
-import Image from "next/image";
-import Link from "next/link";
-import ErrorAPIButton from "../ErrorAPIButton/ErrorAPIButton";
+import WatchedHistory from '@/components/News/WatchedHistory';
+import { HStack } from '@chakra-ui/react';
+import Image from 'next/image';
+import Link from 'next/link';
+import ErrorAPIButton from '../ErrorAPIButton/ErrorAPIButton';
 
-const Header = () => {
+function Header() {
   return (
-    <header className="absolute z-30 w-full flex px-[10%]">
-      <div className="flex w-full justify-between items-center xl:flex-row">
-        <Link href={"/"}>
+    <header className='absolute z-30 w-full flex px-[10%]'>
+      <div className='flex w-full justify-between items-center xl:flex-row'>
+        <Link href='/'>
           <Image
-            className="ml-[-18px]"
-            src={"/images/logo.png"}
+            className='ml-[-18px]'
+            src='/images/logo.png'
             width={220}
             height={48}
-            alt=""
+            alt=''
             priority
           />
         </Link>
@@ -27,6 +27,6 @@ const Header = () => {
       </div>
     </header>
   );
-};
+}
 
 export default Header;

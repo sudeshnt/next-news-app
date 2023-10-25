@@ -1,4 +1,4 @@
-import { News, SearchData } from "@/services/types";
+import { News, SearchData } from '@/services/types';
 
 export type NewsDetails = News & {
   article: string;

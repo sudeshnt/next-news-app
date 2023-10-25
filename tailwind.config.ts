@@ -1,22 +1,22 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     container: {
       padding: {
-        DEFAULT: "15px",
+        DEFAULT: '15px',
       },
     },
     extend: {
       colors: {
-        primary: "#9d8dbd",
-        secondary: "#393A47",
-        primaryBackground: "#1b1437",
+        primary: '#9d8dbd',
+        secondary: '#393A47',
+        primaryBackground: '#1b1437',
       },
       backgroundImage: {
         explosion: 'url("/images/bg-explosion.png")',
@@ -24,10 +24,10 @@ const config: Config = {
         site: 'url("/images/site-bg.svg")',
       },
       fontFamily: {
-        roboto: [`var(--font-roboto)`, "sans-serif"],
+        roboto: ['var(--font-roboto)', 'sans-serif'],
       },
     },
   },
-  plugins: [require("tailwind-scrollbar")],
+  plugins: [require('tailwind-scrollbar')],
 };
 export default config;

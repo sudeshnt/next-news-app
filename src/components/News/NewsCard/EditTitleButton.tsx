@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useNewsStore } from "@/store/News";
+import useNewsStore from '@/store/News';
 import {
   Button,
   FormControl,
@@ -17,18 +17,18 @@ import {
   ModalOverlay,
   useDisclosure,
   useToast,
-} from "@chakra-ui/react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { RiEditBoxLine } from "react-icons/ri";
-import * as z from "zod";
+} from '@chakra-ui/react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { RiEditBoxLine } from 'react-icons/ri';
+import * as z from 'zod';
 
 const newsTitleFormValidationSchema = z.object({
   title: z
     .string()
-    .min(1, "News title is required")
-    .max(255, "News title must be less than 256 characters"),
+    .min(1, 'News title is required')
+    .max(255, 'News title must be less than 256 characters'),
 });
 
 type TitleFormData = {
@@ -36,6 +36,8 @@ type TitleFormData = {
 };
 
 export default function EditTitleButton(props: TitleFormData) {
+  const { title } = props;
+
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -47,43 +49,43 @@ export default function EditTitleButton(props: TitleFormData) {
     reset,
     formState: { isValid, errors },
   } = useForm<TitleFormData>({
-    mode: "onChange",
+    mode: 'onChange',
     resolver: zodResolver(newsTitleFormValidationSchema),
   });
-
-  const onSubmit: SubmitHandler<TitleFormData> = (data) => {
-    editNewsTitle(props.title, data.title);
-    onCloseModal();
-    toast({
-      title: "Title updated",
-      status: "success",
-      isClosable: true,
-    });
-  };
 
   const onCloseModal = () => {
     onClose();
     reset({});
   };
 
+  const onSubmit: SubmitHandler<TitleFormData> = (data) => {
+    editNewsTitle(title, data.title);
+    onCloseModal();
+    toast({
+      title: 'Title updated',
+      status: 'success',
+      isClosable: true,
+    });
+  };
+
   useEffect(() => {
-    reset({ title: props.title });
-  }, [props.title, reset]);
+    reset({ title });
+  }, [title, reset]);
 
   return (
     <>
       <Icon
-        display="inline"
+        display='inline'
         as={RiEditBoxLine}
         ml={2}
         w={5}
         h={5}
-        className="text-primary"
+        className='text-primary'
         onClick={onOpen}
       />
       <Modal isOpen={isOpen} onClose={onCloseModal}>
         <ModalOverlay />
-        <ModalContent className="bg-primaryBackground my-auto">
+        <ModalContent className='bg-primaryBackground my-auto'>
           <form onSubmit={handleSubmit(onSubmit)}>
             <ModalHeader>
               <ModalCloseButton />
@@ -91,26 +93,26 @@ export default function EditTitleButton(props: TitleFormData) {
             <ModalBody pb={6}>
               <FormControl isRequired isInvalid={!!errors.title}>
                 <FormLabel>News Title</FormLabel>
-                <Input placeholder="Title" {...register("title")} />
+                <Input placeholder='Title' {...register('title')} />
                 <FormErrorMessage>{errors.title?.message}</FormErrorMessage>
               </FormControl>
             </ModalBody>
             <ModalFooter>
               <Button
-                type="submit"
-                borderRadius="full"
-                variant="outline"
+                type='submit'
+                borderRadius='full'
+                variant='outline'
                 mr={3}
                 isDisabled={!isValid}
-                className="text-primary hover:text-secondary"
+                className='text-primary hover:text-secondary'
               >
                 Save
               </Button>
               <Button
-                borderRadius="full"
-                variant="outline"
+                borderRadius='full'
+                variant='outline'
                 onClick={onCloseModal}
-                className="text-primary hover:text-secondary"
+                className='text-primary hover:text-secondary'
               >
                 Cancel
               </Button>

@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { SearchData } from "@/services/types";
-import { Box } from "@chakra-ui/react";
-import range from "lodash/range";
+import { SearchData } from '@/services/types';
+import { Box } from '@chakra-ui/react';
+import range from 'lodash/range';
 
 type PaginationProps = {
   pages: number;
@@ -22,19 +22,20 @@ export default function Pagination(props: PaginationProps) {
   };
 
   return (
-    <Box className="flex justify-end gap-3 pb-4">
+    <Box className='flex justify-end gap-3 pb-4'>
       {range(1, pages + 1).map((page) => (
-        <span
+        <button
+          type='button'
           key={page}
           onClick={() => handleOnChangePage(page)}
           className={`px-3 py-1 border cursor-pointer transition-all hover:border-white/80 ${
             selectedPage === page
-              ? "text-secondary border-secondary/50 bg-slate-100"
-              : "text-primary/60 border-primary/60 hover:text-white/80"
+              ? 'text-secondary border-secondary/50 bg-slate-100'
+              : 'text-primary/60 border-primary/60 hover:text-white/80'
           }`}
         >
           {page}
-        </span>
+        </button>
       ))}
     </Box>
   );
