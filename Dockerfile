@@ -1,35 +1,34 @@
-FROM node:18-alpine as base
-RUN apk add --no-cache g++ make py3-pip libc6-compat
+# Build stage
+FROM node:18-alpine as build
 
 WORKDIR /app
+
+RUN npm install -g pnpm
+
 COPY package*.json ./
+
+# Install only the dependencies needed for building the project
+RUN pnpm i
+
+# Copy local code to the container image.
+COPY . .
+
+# Build the application
+RUN pnpm build
+
+# Run stage
+FROM node:18-alpine
+
+WORKDIR /app
+
+RUN npm install -g pnpm
+
+# Copy only the dependencies installation from the 1st stage image
+COPY --from=build /app/package.json ./package.json
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/.next ./.next
+COPY --from=build /app/public ./public
+
 EXPOSE 3000
 
-FROM base as builder
-WORKDIR /app
-COPY . .
-RUN npm run build
-
-
-FROM base as production
-WORKDIR /app
-
-ENV NODE_ENV=production
-RUN npm ci
-
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nextjs -u 1001
-USER nextjs
-
-COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/public ./public
-
-CMD npm start
-
-FROM base as dev
-ENV NODE_ENV=development
-RUN npm install 
-COPY . .
-CMD npm run dev
+CMD [ "pnpm", "start" ]
