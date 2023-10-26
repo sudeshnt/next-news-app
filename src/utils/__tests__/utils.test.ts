@@ -6,7 +6,7 @@ describe('parseJsonSafely', () => {
   });
 
   it('should return null when input is not a valid JSON string', () => {
-    expect(parseJsonSafely('not a json string')).toBeNull();
+    expect(parseJsonSafely('not a json')).toBeNull();
   });
 
   it('should return a parsed object when input is a valid JSON string', () => {
