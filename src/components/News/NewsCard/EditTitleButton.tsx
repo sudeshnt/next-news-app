@@ -27,7 +27,7 @@ import * as z from 'zod';
 const newsTitleFormValidationSchema = z.object({
   title: z
     .string()
-    .min(1, 'News title is required')
+    .min(1, 'News title is require')
     .max(255, 'News title must be less than 256 characters'),
 });
 
@@ -39,6 +39,7 @@ export default function EditTitleButton(props: TitleFormData) {
   const { title } = props;
 
   const toast = useToast();
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const editNewsTitle = useNewsStore((state) => state.editNewsTitle);
