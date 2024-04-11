@@ -10,6 +10,7 @@ export enum NewsCategory {
 }
 
 export type NextSearchParams = Record<string, string | undefined>;
+
 export type NextPageProps = {
   searchParams: NextSearchParams;
 };
