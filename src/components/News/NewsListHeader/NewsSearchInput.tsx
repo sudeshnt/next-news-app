@@ -66,7 +66,7 @@ export default function NewsSearchInput(props: NewsSearchInputProps) {
     if (option?.value?.id !== selectedSource) {
       onChangeSearchData({
         source: option?.value?.id ?? '',
-        category: option?.value?.category ?? '',
+        category: option?.value?.category ?? searchData.category,
         page: '1',
       });
     }
@@ -85,6 +85,7 @@ export default function NewsSearchInput(props: NewsSearchInputProps) {
 
   const debounceFn = useCallback(debounce(handleOnChangeSearchText, 1000), [
     debounce,
+    searchData,
   ]);
 
   useEffect(() => {

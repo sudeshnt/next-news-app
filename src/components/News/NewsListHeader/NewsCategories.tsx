@@ -16,23 +16,20 @@ export default function NewsCategories(props: NewsCategoriesProps) {
   const { searchData, onChangeSearchData } = props;
 
   const selectedCategory = searchData.category;
-  const selectedSource = searchData.source;
 
-  const categories: CategoryOption[] = selectedSource
-    ? [{ label: selectedCategory }]
-    : [
-        { label: NewsCategory.General, value: '' },
-        { label: NewsCategory.Business },
-        { label: NewsCategory.Entertainment },
-        { label: NewsCategory.Health },
-        { label: NewsCategory.Science },
-        { label: NewsCategory.Sports },
-        { label: NewsCategory.Technology },
-      ];
+  const categories: CategoryOption[] = [
+    { label: NewsCategory.General, value: '' },
+    { label: NewsCategory.Business },
+    { label: NewsCategory.Entertainment },
+    { label: NewsCategory.Health },
+    { label: NewsCategory.Science },
+    { label: NewsCategory.Sports },
+    { label: NewsCategory.Technology },
+  ];
 
   const handleOnChangeCategory = (category: string) => {
     if (category !== selectedCategory) {
-      onChangeSearchData({ category, page: '1' });
+      onChangeSearchData({ category, source: '', q: '', page: '1' });
     }
   };
 

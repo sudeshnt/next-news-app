@@ -2,10 +2,9 @@
 
 import Loading from '@/app/loading';
 import { SearchData } from '@/services/types';
-import useNewsStore from '@/store/News';
 import { Box, Heading } from '@chakra-ui/react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import NewsCategories from './NewsCategories';
 import NewsSearchInput from './NewsSearchInput';
 import Pagination from './Pagination';
@@ -22,14 +21,23 @@ export default function NewsListHeader({ totalPages }: { totalPages: number }) {
   const router = useRouter();
   const pathName = usePathname();
 
+  const [isLoading, setIsLoading] = useState(false);
   const [searchData, setSearchData] = useState<SearchData>(DEFAULT_SEARCH_DATA);
 
-  const isFetchingNews = useNewsStore((state) => state.isFetchingNews);
-
-  const handleChangeSearchData = (data: Partial<SearchData>) => {
-    const params = new URLSearchParams({ ...searchData, ...data });
-    router.replace(`${pathName}?${params.toString()}`);
-  };
+  const handleChangeSearchData = useCallback(
+    (data: Partial<SearchData>) => {
+      setIsLoading(true);
+      const params = new URLSearchParams(searchParams);
+      Object.entries(data).forEach(([key, value]) => {
+        params.set(key, value);
+      });
+      router.replace(`${pathName}?${params.toString()}`);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 800);
+    },
+    [searchParams],
+  );
 
   useEffect(() => {
     setSearchData({
@@ -42,7 +50,7 @@ export default function NewsListHeader({ totalPages }: { totalPages: number }) {
 
   return (
     <>
-      {isFetchingNews && <Loading />}
+      {isLoading && <Loading />}
       <Heading className='mb-4' variant='2xl'>
         Latest News
       </Heading>

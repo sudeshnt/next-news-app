@@ -6,7 +6,6 @@ export type NewsDetails = News & {
 
 export type NewsState = {
   watchList: News[];
-  isFetchingNews: boolean;
   populateWatchList: () => Promise<void>;
   addToWatchList: (news: News) => Promise<void>;
   removeFromWatchList: (title: string) => Promise<void>;

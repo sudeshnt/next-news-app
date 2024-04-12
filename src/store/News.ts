@@ -5,7 +5,6 @@ import { NewsState } from './types';
 
 const useNewsStore = create<NewsState>((set, get) => ({
   watchList: [],
-  isFetchingNews: false,
   populateWatchList: async () => {
     try {
       const watchList = (await localforage.getItem<News[]>('watch-list')) ?? [];
