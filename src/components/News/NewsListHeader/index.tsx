@@ -1,6 +1,6 @@
 'use client';
 
-import Loading from '@/app/loading';
+import Loading from '@/app/news/loading';
 import { SearchData } from '@/services/types';
 import { Box, Heading } from '@chakra-ui/react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';

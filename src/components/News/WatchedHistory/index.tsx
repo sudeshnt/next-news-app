@@ -68,7 +68,7 @@ export default function WatchedHistory() {
               <Link
                 key={news.title}
                 href={{
-                  pathname: '/news',
+                  pathname: '/news-article',
                   query: {
                     q: searchParams.get('q') ?? '',
                     source: searchParams.get('source') ?? '',
