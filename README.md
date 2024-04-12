@@ -11,7 +11,7 @@
   <a href="">
     <img src="public/images/logo.png" alt="Logo" height="150" style="margin-left: 60px;" >
   </a>
-  <h1 align="center">Next News App</h1>
+  <h1 align="center">News Sphere.</h1>
   <p align="center">
     <a href="https://next-news-l9mrlv28b-sudeshnt.vercel.app"><strong>View Demo »</strong></a>
     <br />
@@ -64,14 +64,12 @@
 ### In this Application you have the ability to
 
 - Fetch top news headlines from multiple news providers.
-- You have the ability to filter the headlines with the source and category.
+- You have the ability to filter the headlines with the category and source.
 - You can search headlines by keyword with the debounced search input.
 - Headlines list is paginated to show 12 news headlines per page.
 - There's a watch list to get a list of news headlines you read in the past.
 - On each news headline card, there's a `Read More` button to go to the detail page of that headline.
-- There's another button to temporarily update a news headline title in the state management. There's an input validation to check titles with less than 256 characters. (FYI: updated title be reset once that news headline is re-fetched.)
 - News details page will be server side rendered and it'll show the full content of the selected news headline.
-- Included a button to demonstrate calling erroneous API to show error handling with an error alert.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
