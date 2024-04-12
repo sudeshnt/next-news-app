@@ -6,15 +6,21 @@ import Link from 'next/link';
 import { IoMdArrowBack } from 'react-icons/io';
 
 export default async function NewsDetailsPage({ searchParams }: NextPageProps) {
-  const newsDetails = parseJsonSafely(searchParams?.data);
+  const newsDetails = parseJsonSafely(searchParams?.article);
 
   if (!newsDetails) return null;
 
   const article = await readNewsDetailsFromUrl(newsDetails.url);
+  const backUrl = `/?${new URLSearchParams({
+    q: searchParams?.q ?? '',
+    source: searchParams?.source ?? '',
+    category: searchParams?.category ?? '',
+    page: searchParams?.page ?? '',
+  })}`;
 
   return (
     <div className='page max-h-[calc(100vh-60px)] overflow-y-scroll hide-scrollbar sm:pt-8 lg:px-[8%]'>
-      <Link href='/'>
+      <Link href={backUrl}>
         <HStack className='text-base font-medium mb-5 text-primary hover:text-white'>
           <IoMdArrowBack />
           <Text>back to Latest News</Text>
@@ -26,7 +32,8 @@ export default async function NewsDetailsPage({ searchParams }: NextPageProps) {
         className='flex flex-col text-primary md:flex-row md:justify-between'
       >
         <Text mb={2}>
-          by {newsDetails.author}, {newsDetails.source?.name}
+          {newsDetails.author ? `by ${newsDetails.author}, ` : ''}
+          {newsDetails.source?.name}
         </Text>
         <Text minW={200}>
           {new Date(newsDetails.publishedAt).toLocaleString()}

@@ -43,7 +43,9 @@ export default function NewsCard(props: NewsCardProps) {
           className='opacity-0 transition-opacity duration-500 group-hover:opacity-100'
         >
           <Text className='italic text-white/75'>
-            by {news.author}, {news.source.name},{'\n'}
+            {news.author ? `by ${news.author}, ` : ''}
+            {news.source.name}
+            {'\n'}
           </Text>
           <Box mt={6} className='flex justify-center'>
             <ReadMoreButton news={news} />

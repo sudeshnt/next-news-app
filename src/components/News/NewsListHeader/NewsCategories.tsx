@@ -2,6 +2,11 @@ import { SearchData } from '@/services/types';
 import { NewsCategory } from '@/types';
 import { Box } from '@chakra-ui/react';
 
+type CategoryOption = {
+  label: string;
+  value?: string;
+};
+
 type NewsCategoriesProps = {
   searchData: SearchData;
   onChangeSearchData: (data: Partial<SearchData>) => void;
@@ -11,25 +16,20 @@ export default function NewsCategories(props: NewsCategoriesProps) {
   const { searchData, onChangeSearchData } = props;
 
   const selectedCategory = searchData.category;
-  const selectedSource = searchData.sources;
 
-  const categories = [
+  const categories: CategoryOption[] = [
     { label: NewsCategory.General, value: '' },
-    ...(selectedSource
-      ? []
-      : [
-          { label: NewsCategory.Business },
-          { label: NewsCategory.Entertainment },
-          { label: NewsCategory.Health },
-          { label: NewsCategory.Science },
-          { label: NewsCategory.Sports },
-          { label: NewsCategory.Technology },
-        ]),
+    { label: NewsCategory.Business },
+    { label: NewsCategory.Entertainment },
+    { label: NewsCategory.Health },
+    { label: NewsCategory.Science },
+    { label: NewsCategory.Sports },
+    { label: NewsCategory.Technology },
   ];
 
   const handleOnChangeCategory = (category: string) => {
     if (category !== selectedCategory) {
-      onChangeSearchData({ category, page: '1' });
+      onChangeSearchData({ category, source: '', q: '', page: '1' });
     }
   };
 

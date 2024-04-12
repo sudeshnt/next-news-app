@@ -18,10 +18,13 @@ import Link from 'next/link';
 import { useEffect } from 'react';
 
 import useNewsStore from '@/store/News';
+import { useSearchParams } from 'next/navigation';
 import { IoMdClose } from 'react-icons/io';
 import { SlEye } from 'react-icons/sl';
 
 export default function WatchedHistory() {
+  const searchParams = useSearchParams();
+
   const [isOpen, setIsOpen] = useBoolean();
 
   const watchList = useNewsStore((state) => state.watchList);
@@ -66,7 +69,13 @@ export default function WatchedHistory() {
                 key={news.title}
                 href={{
                   pathname: '/news',
-                  query: { data: JSON.stringify(news) },
+                  query: {
+                    q: searchParams.get('q') ?? '',
+                    source: searchParams.get('source') ?? '',
+                    category: searchParams.get('category') ?? '',
+                    page: searchParams.get('page') ?? '',
+                    article: JSON.stringify(news),
+                  },
                 }}
                 onClick={setIsOpen.off}
               >

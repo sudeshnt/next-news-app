@@ -26,7 +26,7 @@ export type NewsSource = {
 
 export type SearchData = {
   q: string;
-  sources: string;
+  source: string;
   category: string;
   page: string;
 };

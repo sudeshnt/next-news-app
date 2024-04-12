@@ -14,7 +14,7 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: 'Manatal News App',
+  title: 'News Sphere.',
   description: '',
 };
 
