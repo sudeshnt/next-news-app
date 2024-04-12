@@ -1,18 +1,10 @@
 'use server';
 
-import identity from 'lodash/identity';
-import pickBy from 'lodash/pickBy';
-
 import { removeDuplicateSpaces } from '@/utils';
 import { Readability } from '@mozilla/readability';
 import { JSDOM } from 'jsdom';
 import pick from 'lodash/pick';
-import {
-  FetchNewsResult,
-  PAGE_SIZE,
-  type NewsSource,
-  type SearchData,
-} from './types';
+import { FetchNewsResult, type NewsSource, type SearchData } from './types';
 
 const NEWS_HOST = 'https://newsapi.org/v2';
 
@@ -20,16 +12,7 @@ export async function fetchNews(
   searchData: Partial<SearchData> = {},
 ): Promise<FetchNewsResult> {
   try {
-    const formattedSearchData = pickBy(searchData, identity);
-    const queryString = new URLSearchParams({
-      q: formattedSearchData.q ?? '',
-      ...(!formattedSearchData.source
-        ? { country: 'us', category: formattedSearchData.category ?? '' }
-        : { sources: formattedSearchData.source }),
-      page: formattedSearchData.page ?? '1',
-      pageSize: PAGE_SIZE.toString(),
-      apiKey: process.env.API_KEY ?? '',
-    }).toString();
+    const queryString = new URLSearchParams(searchData).toString();
     console.log(`${NEWS_HOST}/top-headlines?${queryString}`);
     const res = await fetch(`${NEWS_HOST}/top-headlines?${queryString}`, {
       cache: 'no-store',
