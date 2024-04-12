@@ -22,9 +22,11 @@ export async function fetchNews(
   try {
     const formattedSearchData = pickBy(searchData, identity);
     const queryString = new URLSearchParams({
-      page: '1',
-      ...formattedSearchData,
-      ...(!formattedSearchData.sources ? { country: 'us' } : {}),
+      q: formattedSearchData.q ?? '',
+      ...(!formattedSearchData.source
+        ? { country: 'us', category: formattedSearchData.category ?? '' }
+        : { sources: formattedSearchData.source }),
+      page: formattedSearchData.page ?? '1',
       pageSize: PAGE_SIZE.toString(),
       apiKey: process.env.API_KEY ?? '',
     }).toString();
@@ -42,11 +44,15 @@ export async function fetchNews(
   }
 }
 
-export async function fetchNewsSources(): Promise<NewsSource[]> {
+export async function fetchNewsSources(
+  category: string = '',
+): Promise<NewsSource[]> {
   try {
-    console.log(`${NEWS_HOST}/sources?apiKey=${process.env.API_KEY}`);
+    console.log(
+      `${NEWS_HOST}/sources?category=${category}&apiKey=${process.env.API_KEY}`,
+    );
     const res = await fetch(
-      `${NEWS_HOST}/sources?apiKey=${process.env.API_KEY}`,
+      `${NEWS_HOST}/sources?category=${category}&apiKey=${process.env.API_KEY}`,
       {
         next: {
           tags: ['news-sources'],

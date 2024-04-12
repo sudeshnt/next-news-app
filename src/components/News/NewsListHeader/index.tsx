@@ -4,6 +4,7 @@ import Loading from '@/app/loading';
 import { SearchData } from '@/services/types';
 import useNewsStore from '@/store/News';
 import { Box, Heading } from '@chakra-ui/react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import NewsCategories from './NewsCategories';
 import NewsSearchInput from './NewsSearchInput';
@@ -11,46 +12,50 @@ import Pagination from './Pagination';
 
 const DEFAULT_SEARCH_DATA: SearchData = {
   q: '',
-  sources: '',
+  source: '',
   category: '',
   page: '1',
 };
 
-export default function NewsListHeader() {
-  const [searchData, setSearchData] = useState(DEFAULT_SEARCH_DATA);
+export default function NewsListHeader({ totalPages }: { totalPages: number }) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathName = usePathname();
 
-  const fetchNews = useNewsStore((state) => state.populateNews);
+  const [searchData, setSearchData] = useState<SearchData>(DEFAULT_SEARCH_DATA);
 
-  const totalPages = useNewsStore((state) => state.totalPages);
   const isFetchingNews = useNewsStore((state) => state.isFetchingNews);
 
   const handleChangeSearchData = (data: Partial<SearchData>) => {
-    setSearchData((prev) => ({
-      ...prev,
-      ...data,
-    }));
+    const params = new URLSearchParams({ ...searchData, ...data });
+    router.replace(`${pathName}?${params.toString()}`);
   };
 
   useEffect(() => {
-    fetchNews(searchData);
-  }, [searchData, fetchNews]);
+    setSearchData({
+      q: searchParams.get('q') ?? '',
+      source: searchParams.get('source') ?? '',
+      category: searchParams.get('category') ?? '',
+      page: searchParams.get('page') ?? '1',
+    });
+  }, [searchParams]);
 
   return (
     <>
       {isFetchingNews && <Loading />}
-      <Box className='flex flex-col md:flex-row md:justify-between'>
-        <Heading className='mb-4' variant='2xl'>
-          Latest News
-        </Heading>
+      <Heading className='mb-4' variant='2xl'>
+        Latest News
+      </Heading>
+      <NewsCategories
+        searchData={searchData}
+        onChangeSearchData={handleChangeSearchData}
+      />
+      <Box className='flex justify-end mb-5'>
         <NewsSearchInput
           searchData={searchData}
           onChangeSearchData={handleChangeSearchData}
         />
       </Box>
-      <NewsCategories
-        searchData={searchData}
-        onChangeSearchData={handleChangeSearchData}
-      />
       <Pagination
         pages={totalPages}
         searchData={searchData}

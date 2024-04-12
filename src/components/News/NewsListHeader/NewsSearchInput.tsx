@@ -9,13 +9,14 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import Select, { StylesConfig } from 'react-select';
 
 type OptionType = {
-  value: string;
   label: string;
+  value: NewsSource;
 };
 
 type NewsSearchInputProps = {
@@ -44,25 +45,28 @@ const selectStyles: StylesConfig = {
 export default function NewsSearchInput(props: NewsSearchInputProps) {
   const { searchData, onChangeSearchData } = props;
 
+  const inputRef = useRef(null);
+  const selectInputRef = useRef(null);
+
   const [isLoading, setIsLoading] = useState(false);
   const [newsSources, setNewsSources] = useState<NewsSource[]>([]);
 
-  const selectedSource = searchData.sources;
+  const selectedSource = searchData.source;
 
   const newsSourcesOptions: OptionType[] = useMemo(
     () =>
       newsSources.map((newsSource) => ({
         label: newsSource.name,
-        value: newsSource.id,
+        value: newsSource,
       })),
     [newsSources],
   );
 
   const handleOnChangeSearchSource = (option: OptionType) => {
-    if (option?.value !== selectedSource) {
+    if (option?.value?.id !== selectedSource) {
       onChangeSearchData({
-        sources: option?.value ?? '',
-        category: '',
+        source: option?.value?.id ?? '',
+        category: option?.value?.category ?? '',
         page: '1',
       });
     }
@@ -84,22 +88,32 @@ export default function NewsSearchInput(props: NewsSearchInputProps) {
   ]);
 
   useEffect(() => {
-    fetchNewsSources().then((sources) => {
+    const sourceCategory =
+      searchData.category === 'general' ? '' : searchData.category;
+    fetchNewsSources(sourceCategory).then((sources) => {
       setNewsSources(sources);
     });
-  }, [setNewsSources]);
+  }, [searchData.category]);
+
+  useEffect(() => {
+    if (!searchData.source) (selectInputRef.current as any).clearValue();
+    if (!searchData.q) (inputRef.current as any).value = '';
+  }, [searchData.source, searchData.q]);
 
   return (
     <HStack gap={0} mr={isLoading ? '-16px' : 0}>
       <Select
+        ref={selectInputRef}
         styles={selectStyles}
         className='text-secondary'
         placeholder='All Sources'
         isClearable
+        defaultValue={searchData.source ?? ''}
         options={newsSourcesOptions}
         onChange={(value) => handleOnChangeSearchSource(value as OptionType)}
       />
       <Input
+        ref={inputRef}
         w={200}
         borderRadius={0}
         ml='-1px'
